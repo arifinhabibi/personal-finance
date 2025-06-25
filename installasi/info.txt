@@ -1,0 +1,26 @@
+require
+    laravel=12
+    php=8.2
+
+installasi 
+    install xampp 8.2
+    copy php.ini ke folder xampp/php/
+
+setting .env
+    copy isi file .env.example lalu paste
+    di file .env, kalo belum punya buat manual di root
+    lalu setting db connection sesuaikan dengan db local
+    contoh: 
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=keuangan_db
+    DB_USERNAME=root
+    DB_PASSWORD=
+
+run di terminal
+    composer install
+    php artisan migrate:fresh
+    php artisan key:generate
+    php artisan jwt:generate
+
