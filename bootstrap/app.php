@@ -15,6 +15,11 @@ return Application::configure(basePath: dirname(__DIR__))
             'prevent-back-history' => \App\Http\Middleware\PreventBackHistory::class,
         ]);
         //
+        $middleware->statefulApi();
+        $middleware->validateCsrfTokens(except: [
+            'webhook/*',
+            'api/*'
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

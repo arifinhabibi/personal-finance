@@ -415,7 +415,7 @@ class TransactionSeeder extends Seeder
 
         foreach ($transactions as $transaction) {
             Transaction::create([
-                'user_id' => 3,
+                'user_id' => 5,
                 'type' => $transaction['type'],
                 'category' => $transaction['category'],
                 'amount' => $transaction['amount'],

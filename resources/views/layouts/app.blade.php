@@ -6,6 +6,9 @@
     <title>Catatan Keuangan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- <link href="{{ asset('build/assets/app-CVXRYZ7Y.css') }}" rel="stylesheet"> --}}
+    <link href="{{ asset('build/assets/app-DO6Blc0x.css') }}" rel="stylesheet">
 </head>
 <body class="bg-gray-100 text-gray-900">
     <div class="flex flex-col md:flex-row min-h-screen">
@@ -44,24 +47,28 @@
                     </nav>
                 </div>
 
-                <!-- Bottom Profile Section -->
+                <!-- Bottom Profile Section as Dropdown -->
                 <div class="mt-auto pt-4 border-t border-gray-200">
-                    <div class="flex items-center px-4 py-2">
-                        <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-2">
-                            <i class="fas fa-user text-blue-600"></i>
+                    <div class="relative">
+                        <button id="profileDropdownButton" class="w-full flex items-center px-4 py-2 rounded-lg hover:bg-gray-100 focus:outline-none">
+                            <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-2">
+                                <i class="fas fa-user text-blue-600"></i>
+                            </div>
+                            <span class="text-sm font-medium flex-grow text-left">{{ Auth::user()->name }}</span>
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        
+                        <div id="profileDropdownMenu" class="hidden absolute bottom-full left-0 right-0 mb-2 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200">
+                            <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <i class="fas fa-cog mr-2"></i> Pengaturan
+                            </a>
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <i class="fas fa-sign-out-alt mr-2"></i> Keluar
+                                </button>
+                            </form>
                         </div>
-                        <span class="text-sm font-medium">{{ Auth::user()->name }}</span>
-                    </div>
-                    <div class="mt-2">
-                        <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                            <i class="fas fa-cog mr-2"></i> Pengaturan
-                        </a>
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button type="submit" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                                <i class="fas fa-sign-out-alt mr-2"></i> Keluar
-                            </button>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -70,25 +77,8 @@
         <!-- Main Content Area -->
         <main class="flex-1 overflow-auto">
             <!-- Desktop Header - Sticky -->
-            <div class="hidden md:flex justify-between items-center mb-6 p-6 pb-0 sticky top-0 bg-gray-100 z-20">
+            <div class="hidden md:flex justify-start items-center mb-6 p-6 pb-0 sticky top-0 bg-gray-100 z-20">
                 <h2 class="text-2xl font-bold">@yield('title', 'Dashboard')</h2>
-                <div class="relative inline-block text-left">
-                    <button id="dropdownButton" onclick="toggleDropdown()" class="flex items-center space-x-2 focus:outline-none">
-                        <span class="text-sm font-semibold text-gray-700">{{ Auth::user()->name }}</span>
-                        <i class="fas fa-chevron-down text-xs"></i>
-                    </button>
-                    <div id="dropdownMenu" class="hidden absolute right-0 mt-2 w-40 bg-white rounded shadow z-50 border border-gray-200">
-                        <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 border-b border-gray-100">
-                            <i class="fas fa-user mr-2"></i> Profil
-                        </a>
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button type="submit" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">
-                                <i class="fas fa-sign-out-alt mr-2"></i> Keluar
-                            </button>
-                        </form>
-                    </div>
-                </div>
             </div>
 
             <!-- Content Section - With proper padding and scrolling -->
@@ -99,21 +89,21 @@
     </div>
 
     <!-- JavaScript -->
-    <!-- Di file layout/app.blade.php -->
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script>
-        // Toggle dropdown menu
-        function toggleDropdown() {
-            const menu = document.getElementById('dropdownMenu');
-            menu.classList.toggle('hidden');
-        }
+        // Profile dropdown functionality in sidebar
+        const profileDropdownButton = document.getElementById('profileDropdownButton');
+        const profileDropdownMenu = document.getElementById('profileDropdownMenu');
 
-        // Close dropdown if click outside
-        window.addEventListener('click', function(e) {
-            const button = document.getElementById('dropdownButton');
-            const menu = document.getElementById('dropdownMenu');
-            if (!button.contains(e.target)) {
-                menu.classList.add('hidden');
+        profileDropdownButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            profileDropdownMenu.classList.toggle('hidden');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!profileDropdownButton.contains(e.target) && !profileDropdownMenu.contains(e.target)) {
+                profileDropdownMenu.classList.add('hidden');
             }
         });
 
@@ -148,5 +138,7 @@
             }
         });
     </script>
+
+    <script src="{{ asset('build/assets/app-DaBYqt0m.js') }}"></script>
 </body>
 </html>
