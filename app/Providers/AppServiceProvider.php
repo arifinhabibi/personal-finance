@@ -19,9 +19,8 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
     public function boot(): void
-    {
+    { 
         //
         // Paginator::useBootstrapFour(); 
-        \URL::forceScheme('https');
     }
 }

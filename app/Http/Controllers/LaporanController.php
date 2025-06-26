@@ -8,7 +8,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\TransactionsExport;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class LaporanController extends Controller
 {
@@ -55,16 +56,15 @@ class LaporanController extends Controller
 
         $userId = Auth::id();
         $filename = 'laporan-transaksi-' . now()->format('Y-m-d') . '.xlsx';
-
+        
         return Excel::download(
             new TransactionsExport($userId, $request->dari, $request->sampai),
             $filename,
             \Maatwebsite\Excel\Excel::XLSX,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment; filename="'.$filename.'"',
-                'Cache-Control' => 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0',
-                'Expires' => '0'
+                'X-Accel-Buffering' => 'no',
+                'Cache-Control' => 'no-store'
             ]
         );
     }

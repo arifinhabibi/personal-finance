@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     {{-- <link href="{{ asset('build/assets/app-CVXRYZ7Y.css') }}" rel="stylesheet"> --}}
-    <link href="{{ asset('build/assets/app-DO6Blc0x.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('build/assets/app-DO6Blc0x.css') }}" rel="stylesheet"> --}}
+    <link rel="stylesheet" href="https://broadly-settled-drum.ngrok-free.app/build/assets/app-DO6Blc0x.css">
+
 </head>
 <body class="bg-gray-100 text-gray-900">
     <div class="flex flex-col md:flex-row min-h-screen">
@@ -139,6 +141,8 @@
         });
     </script>
 
-    <script src="{{ asset('build/assets/app-DaBYqt0m.js') }}"></script>
+    {{-- <script src="{{ asset('build/assets/app-DaBYqt0m.js') }}"></script> --}}
+    <script src="https://broadly-settled-drum.ngrok-free.app/build/assets/app-DaBYqt0m.js"></script>
+
 </body>
 </html>
